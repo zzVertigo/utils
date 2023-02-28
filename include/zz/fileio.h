@@ -37,10 +37,10 @@ namespace zz::io
 
 			}
 
-			FileIOImpl(std::string_view fileName)
+			FileIOImpl(const std::string& fileName)
 			{
 				EnableStreamExceptions();
-				m_stream.open(fileName);
+				m_stream.open(fileName.c_str());
 			}
 
 			std::string ReadLine()

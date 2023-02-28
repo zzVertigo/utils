@@ -1,11 +1,12 @@
 #pragma once
 
-#include "vertigo_fileio.h"
+#include "fileio.h"
 
 #include <iostream>
 #include <string>
 #include <format>
 #include <chrono>
+#include <utility>
 
 namespace zz::log
 {
@@ -20,7 +21,7 @@ namespace zz::log
 	class Logger
 	{
 	public:
-		Logger(std::string_view fileName, e_logLevel logLevel = Info)
+		Logger(const std::string& fileName, e_logLevel logLevel = Info)
 			: m_logLevel(logLevel),
               m_fileIo(fileName)
 		{
@@ -36,8 +37,8 @@ namespace zz::log
 		template <typename...Args>
 		void Log(e_logLevel logLevel, std::string_view format, Args&&... args)
 		{
-			std::string consolePrefix = "";
-			std::string filePrefix = "";
+			std::string consolePrefix;
+			std::string filePrefix;
 
 			const std::string time = GetCurrentDateTime();
 
@@ -70,32 +71,11 @@ namespace zz::log
 			std::clog << consoleOutput;
 		}
 
-		template <typename...Args>
-		void LogInfo(std::string format, Args... args)
+		template <e_logLevel logLevel, typename...Args>
+		void Log(std::string format, Args... args)
 		{
-			if (m_logLevel >= Info)
-				Log(Info, format, args...);
-		}
-
-		template <typename...Args>
-		void LogWarning(std::string format, Args... args)
-		{
-			if (m_logLevel >= Warning)
-				Log(Warning, format, args...);
-		}
-
-		template <typename...Args>
-		void LogError(std::string format, Args... args)
-		{
-			if (m_logLevel >= Error)
-				Log(Error, format, args...);
-		}
-
-		template <typename...Args>
-		void LogDebug(std::string format, Args... args)
-		{
-			if (m_logLevel >= Debug)
-				Log(Debug, format, args...);
+			if (m_logLevel >= logLevel)
+				Log(logLevel, format, args...);
 		}
 
 	private:
