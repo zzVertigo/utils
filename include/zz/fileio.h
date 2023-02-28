@@ -23,7 +23,7 @@ namespace zz::io
 	namespace _detail
 	{
 		template<e_method IoKind>
-		class VFileIOImpl
+		class FileIOImpl
 		{
 		public:
 			using streamType =
@@ -31,13 +31,13 @@ namespace zz::io
 				std::conditional_t<IoKind == Out, std::ofstream, std::fstream>>;
 
 		public:
-			VFileIOImpl(streamType&& stream) noexcept
+			FileIOImpl(streamType&& stream) noexcept
 				: m_stream(std::move(stream))
 			{
 
 			}
 
-			VFileIOImpl(std::string_view fileName)
+			FileIOImpl(std::string_view fileName)
 			{
 				EnableStreamExceptions();
 				m_stream.open(fileName);
@@ -81,7 +81,7 @@ namespace zz::io
 		};
 	}
 
-	using IFile = _detail::VFileIOImpl<In>;
-	using OFile = _detail::VFileIOImpl<Out>;
-	using File = _detail::VFileIOImpl<InOut>;
+	using IFile = _detail::FileIOImpl<In>;
+	using OFile = _detail::FileIOImpl<Out>;
+	using File = _detail::FileIOImpl<InOut>;
 }
