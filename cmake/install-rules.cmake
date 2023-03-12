@@ -12,17 +12,17 @@ include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
 # find_package(<package>) call for consumers to find this project
-set(package zz)
+set(package zz_utils)
 
 install(
     DIRECTORY include/
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
-    COMPONENT zz_Development
+    COMPONENT zz_utils_Development
 )
 
 install(
-    TARGETS zz_zz
-    EXPORT zzTargets
+    TARGETS zz_utils
+    EXPORT zzUtilsTargets
     INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
 
@@ -34,29 +34,29 @@ write_basic_package_version_file(
 
 # Allow package maintainers to freely override the path for the configs
 set(
-    zz_INSTALL_CMAKEDIR "${CMAKE_INSTALL_DATADIR}/${package}"
+    zz_utils_INSTALL_CMAKEDIR "${CMAKE_INSTALL_DATADIR}/${package}"
     CACHE PATH "CMake package config location relative to the install prefix"
 )
-mark_as_advanced(zz_INSTALL_CMAKEDIR)
+mark_as_advanced(zz_utils_INSTALL_CMAKEDIR)
 
 install(
     FILES cmake/install-config.cmake
-    DESTINATION "${zz_INSTALL_CMAKEDIR}"
+    DESTINATION "${zz_utils_INSTALL_CMAKEDIR}"
     RENAME "${package}Config.cmake"
-    COMPONENT zz_Development
+    COMPONENT zz_utils_Development
 )
 
 install(
     FILES "${PROJECT_BINARY_DIR}/${package}ConfigVersion.cmake"
-    DESTINATION "${zz_INSTALL_CMAKEDIR}"
-    COMPONENT zz_Development
+    DESTINATION "${zz_utils_INSTALL_CMAKEDIR}"
+    COMPONENT zz_utils_Development
 )
 
 install(
-    EXPORT zzTargets
+    EXPORT zzUtilsTargets
     NAMESPACE zz::
-    DESTINATION "${zz_INSTALL_CMAKEDIR}"
-    COMPONENT zz_Development
+    DESTINATION "${zz_utils_INSTALL_CMAKEDIR}"
+    COMPONENT zz_utils_Development
 )
 
 if(PROJECT_IS_TOP_LEVEL)
