@@ -7,12 +7,12 @@
 set(warning_guard "")
 if(NOT PROJECT_IS_TOP_LEVEL)
   option(
-      zz_INCLUDES_WITH_SYSTEM
+      zz_utils_INCLUDES_WITH_SYSTEM
       "Use SYSTEM modifier for zz's includes, disabling warnings"
       ON
   )
-  mark_as_advanced(zz_INCLUDES_WITH_SYSTEM)
-  if(zz_INCLUDES_WITH_SYSTEM)
+  mark_as_advanced(zz_utils_INCLUDES_WITH_SYSTEM)
+  if(zz_utils_INCLUDES_WITH_SYSTEM)
     set(warning_guard SYSTEM)
   endif()
 endif()
